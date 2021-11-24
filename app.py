@@ -13,4 +13,4 @@ if st.button('Calculer les routes'):
     else:
         orders = pd.read_csv(uploaded_file)
         new_routes = optimize(orders, delay)
-        st.datafram(data=new_routes)
+        st.dataframe(data=new_routes.iloc[:, 2:])
