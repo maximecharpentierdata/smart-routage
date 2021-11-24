@@ -5,7 +5,7 @@ from utils import *
 st.title("Application de routage des camions - LPD")
 
 uploaded_file = st.file_uploader("Choisir un fichier de commandes")
-delay = st.slider("Choisir un délai de livraison", min_values=1, max_values=2)
+delay = st.slider("Choisir un délai de livraison", min_value=1, max_value=2)
 
 if st.button('Calculer les routes'):
     if uploaded_file is None:
