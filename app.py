@@ -16,6 +16,7 @@ if uploaded_file and warehouse:
             st.text_area("Fichier invalide !")
         else:
             orders = pd.read_csv(uploaded_file)
+            
             with st.spinner('Calcul des routes optimales 🚛 ... '):
                 new_routes = optimize(orders, warehouse)
             
@@ -31,6 +32,6 @@ if uploaded_file and warehouse:
             st.write(f"{len(new_routes)} trajets à effectuer aujourd'hui !")
 
             for k, (i, route) in enumerate(new_routes.iterrows()):
-                with st.expander(f"Trajet {k+1} : **{route.total_distance:.0f} km**", ):
+                with st.expander(f"Trajet {k+1} : {route.total_distance:.0f} km", ):
                     st.write(f"**Arrêts** : {route.stops}")
                     st.write(f"**Commandes** : {route.orders}")
