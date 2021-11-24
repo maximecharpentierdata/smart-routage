@@ -14,3 +14,4 @@ if st.button('Calculer les routes'):
         orders = pd.read_csv(uploaded_file)
         new_routes = optimize(orders, delay)
         st.dataframe(data=new_routes.iloc[:, 2:])
+        st.download_button("Télécharger les routes", new_routes.to_csv().encode('utf-8'))
