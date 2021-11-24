@@ -5,8 +5,8 @@ from utils import *
 st.title("Calcul des roues - LPD")
 st.sidebar.header("Smart-Routage 🌍")
 
-uploaded_file = st.file_uploader("Choisir un fichier de commandes")
-delay = st.slider("Choisir un délai de livraison", min_value=1, max_value=2)
+uploaded_file = st.sidebar.file_uploader("Choisir un fichier de commandes")
+delay = st.sidebar.slider("Choisir un délai de livraison", min_value=1, max_value=2)
 
 if st.button('Calculer les routes'):
     if uploaded_file is None:
