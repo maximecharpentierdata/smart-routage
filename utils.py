@@ -238,7 +238,7 @@ def optimize(orders, delay):
     orders = apply_delay(orders, delay)
     for date in stqdm(orders.delivered_date.unique().tolist()):
         for warehouse in orders.from_warehouse.unique().tolist():
-            output = run(date, warehouse, 81.25)
+            output = run(orders, date, warehouse, 81.25)
             if output is not None:
                 new_routes = new_routes.append(output, ignore_index=True)
             else:
