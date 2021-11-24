@@ -12,6 +12,7 @@ cities = pd.read_csv("./cities.csv")
 
 # Including delivery delay
 
+
 def apply_delay(orders, delay):
     if delay > 1:
 
@@ -24,6 +25,7 @@ def apply_delay(orders, delay):
                     orders["delivered_date"] == dates[index + i], "delivered_date"
                 ] = dates[index]
     return orders
+
 
 # Preparing data for one day and one warehouse
 

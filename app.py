@@ -10,7 +10,7 @@ st.sidebar.header("Smart-Routage")
 uploaded_file = st.sidebar.file_uploader("Choisir un fichier de commandes")
 delay = st.sidebar.slider("Choisir un délai de livraison", min_value=1, max_value=2)
 
-if st.button('Calculer les routes'):
+if st.button("Calculer les routes"):
     if uploaded_file is None:
         st.text_area("Fichier invalide !")
     else:
@@ -18,8 +18,8 @@ if st.button('Calculer les routes'):
         new_routes = optimize(orders, delay)
         st.dataframe(data=new_routes.iloc[:, 2:])
         st.download_button(
-            label = "Télécharger les routes", 
-            data = new_routes.to_csv().encode('utf-8'),
-            file_name = 'routes.csv',
-            mime='text/csv',
+            label="Télécharger les routes",
+            data=new_routes.to_csv().encode("utf-8"),
+            file_name="routes.csv",
+            mime="text/csv",
         )
