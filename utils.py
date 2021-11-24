@@ -13,27 +13,25 @@ cities = pd.read_csv("./cities.csv")
 # Including delivery delay
 
 
-def apply_delay(orders, delay):
-    if delay > 1:
+# def apply_delay(orders, delay):
+#     if delay > 1:
 
-        dates = orders["delivered_date"].unique().tolist()
-        dates.sort()
+#         dates = orders["delivered_date"].unique().tolist()
+#         dates.sort()
 
-        for index in range(0, len(dates) - delay, delay):
-            for i in range(1, delay):
-                orders.loc[
-                    orders["delivered_date"] == dates[index + i], "delivered_date"
-                ] = dates[index]
-    return orders
+#         for index in range(0, len(dates) - delay, delay):
+#             for i in range(1, delay):
+#                 orders.loc[
+#                     orders["delivered_date"] == dates[index + i], "delivered_date"
+#                 ] = dates[index]
+#     return orders
 
 
 # Preparing data for one day and one warehouse
 
 
-def create_df(orders, date, warehouse, capacity):
-    sub_orders = orders[
-        (orders["delivered_date"] == date) & (orders["from_warehouse"] == warehouse)
-    ]
+def create_df(orders, warehouse, capacity):
+    sub_orders = orders
     groupedby = (
         sub_orders[["delivery_location", "order_total_volume", "order_id", "n_units"]]
         .groupby("delivery_location")
@@ -91,8 +89,8 @@ def _distance_calculator(_df):
     return _distance_result
 
 
-def create_data(orders, date, warehouse, capacity):
-    df = create_df(orders, date, warehouse, capacity)
+def create_data(orders, warehouse, capacity):
+    df = create_df(orders, warehouse, capacity)
     distances = _distance_calculator(df)
     data = dict(
         demands=df.order_total_volume * 100,
@@ -133,7 +131,7 @@ def save_solution(data, manager, routing, solution):
     return vehicules
 
 
-def make_routes(output, df, date, warehouse):
+def make_routes(output, df):
     routes_list = []
     for route in output:
         if route["route_load"] > 0:
@@ -152,8 +150,6 @@ def make_routes(output, df, date, warehouse):
             route_row["orders"] = " > ".join(
                 [order for order in orders_list if order != ""]
             )
-            route_row["from_warehouse"] = warehouse
-            route_row["route_date"] = date[:10]
             route_row["stops"] = " > ".join(
                 [df["city"][k] for k in route["stops_vehicle"]]
             )
@@ -226,25 +222,30 @@ def solve(data):
 # Run function
 
 
-def run(orders, date, warehouse, capacity):
-    data, df = create_data(orders, date, warehouse, capacity)
+# def run(orders, date, warehouse, capacity):
+def run(orders, warehouse, capacity):
+    data, df = create_data(orders, warehouse, capacity)
     output = solve(data)
     if output:
-        new_routes = make_routes(output, df, date, warehouse)
+        new_routes = make_routes(output, df)
         return new_routes
 
 
-def optimize(orders, delay):
+def optimize(orders, warehouse):
     new_routes = pd.DataFrame()
-    errors = []
-    orders = apply_delay(orders, delay)
-    for date in stqdm(orders.delivered_date.unique().tolist()):
-        for warehouse in orders.from_warehouse.unique().tolist():
-            output = run(orders, date, warehouse, 81.25)
-            if output is not None:
-                new_routes = new_routes.append(output, ignore_index=True)
-            else:
-                print("Erreur!")
-                errors.append((date, warehouse))
+    # orders = apply_delay(orders, delay)
+    # for date in stqdm(orders.delivered_date.unique().tolist()):
+    #     for warehouse in orders.from_warehouse.unique().tolist():
+    #         output = run(orders, date, warehouse, 81.25)
+    #         if output is not None:
+    #             new_routes = new_routes.append(output, ignore_index=True)
+    #         else:
+    #             print("Erreur!")
+    #             errors.append((date, warehouse))
+    output = run(orders, warehouse, 81.25)
+    if output is not None:
+        new_routes = new_routes.append(output, ignore_index=True)
+    else:
+        print("Erreur!")
 
     return new_routes
