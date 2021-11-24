@@ -2,8 +2,10 @@ import streamlit as st
 import pandas as pd
 from utils import *
 
-st.title("Calcul des roues - LPD")
-st.sidebar.header("Smart-Routage 🌍")
+st.set_page_config(page_title="Smart-Routage")
+
+st.title("Calcul des routes - LPD")
+st.sidebar.header("Smart-Routage")
 
 uploaded_file = st.sidebar.file_uploader("Choisir un fichier de commandes")
 delay = st.sidebar.slider("Choisir un délai de livraison", min_value=1, max_value=2)
