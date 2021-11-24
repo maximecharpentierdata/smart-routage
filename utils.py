@@ -8,7 +8,7 @@ from stqdm import stqdm
 
 # Loading
 
-cities = pd.read_csv("../data_clean/cities.csv")
+cities = pd.read_csv("./cities.csv")
 
 # Including delivery delay
 
