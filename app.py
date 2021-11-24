@@ -17,13 +17,13 @@ if uploaded_file and warehouse:
         else:
             orders = pd.read_csv(uploaded_file)
             
-            with st.spinner('Calcul des routes optimales 🚛 ... '):
+            with st.spinner('Calcul des routes optimales 🚛  ... '):
                 new_routes = optimize(orders, warehouse)
             
             st.success("Calcul réussi !")
 
             st.download_button(
-                label="Exporter les routes dans un fichier",
+                label="Exporter les routes dans un fichier .csv",
                 data=new_routes.to_csv().encode("utf-8"),
                 file_name="routes.csv",
                 mime="text/csv",
