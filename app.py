@@ -11,6 +11,7 @@ uploaded_file = st.sidebar.file_uploader("Choisir un fichier de commandes")
 warehouse = st.sidebar.selectbox("Choisir un entrepôt", [None, "Cergy", "Rennes", "Épinal", "Montauban", "Avignon"])
 
 done = False
+button = False
 
 if uploaded_file and warehouse and not done:
     button = st.button("Calculer les routes")
