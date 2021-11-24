@@ -36,3 +36,4 @@ if uploaded_file and warehouse:
                 with st.expander(f"Trajet {k+1} : {route.total_distance:.0f} km", ):
                     st.write(f"**Arrêts** : {route.stops}")
                     st.write(f"**Commandes** : {route.orders}")
+                    st.write(f"**Taux de remplissage** : {route.fill_volume/81.25*100:.2f}")
