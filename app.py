@@ -20,7 +20,7 @@ if uploaded_file:
 
             st.write(f"{len(new_routes)} trajets à effectuer aujourd'hui !")
 
-            for k, route in enumerate(new_routes):
+            for k, (i, route) in enumerate(new_routes.iterrows()):
                 with st.expander(f"Trajet {k+1} : {route.total_distance:.0f} km"):
                     st.write(f"Arrêts : {route.stops}")
                     st.write(f"Commandes : {route.orders}")
